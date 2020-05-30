@@ -27,7 +27,7 @@ trn = df.drop(df.columns[0], axis = 1)  # выбираем то по чему б
 Xtrn, Xtest, Ytrn, Ytest = train_test_split(trn, trg, test_size=0.4)
 #собираем модель случайного леса
 model = RandomForestRegressor(n_estimators=100, max_features ='sqrt', max_depth = 13)
-model.fit(Xtrn, Ytrn)
+model.fit(Xtrn, np.ravel(Ytrn))
 score = model.score(Xtest, Ytest)
 print('r2 = ',score)
 #записываю предсказания
@@ -63,7 +63,7 @@ for i in range(2,40,1):
     max_depth = i
 
     model = RandomForestRegressor(n_estimators=100, max_features='sqrt', max_depth = max_depth)
-    model.fit(Xtrn, Ytrn)
+    model.fit(Xtrn, np.ravel(Ytrn))
     # записываю предсказания
     predictions = model.predict(Xtest)
     RSS = []

@@ -1,9 +1,10 @@
 import sys
 # Импортируем наш интерфейс из файла
+from sklearn.ensemble import RandomForestRegressor
 from MQt import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from pandas import read_csv
-from sklearn.linear_model import LinearRegression, LogisticRegression
+import numpy as np
 import pandas as pd
 class MyWin(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
@@ -26,8 +27,8 @@ class MyWin(QtWidgets.QMainWindow):
         trg = df[['price']]  # выбираем то что будем предсказывать
         trn = df.drop(df.columns[0], axis=1)  # выбираем то по чему будем предсказывать
                 # собираем регрессию
-        model = LinearRegression()
-        model.fit(trn, trg)
+        model =  RandomForestRegressor(n_estimators=100, max_features ='sqrt', max_depth = 13)
+        model.fit(trn, np.ravel(trg))
 
         totsp = self.ui.textEdit.toPlainText()
         livesp = self.ui.textEdit_2.toPlainText()
@@ -44,7 +45,7 @@ class MyWin(QtWidgets.QMainWindow):
         data = pd.DataFrame(data=data)
 
         predictions = model.predict(data)
-        predictions = str(predictions[0][0])
+        predictions = str(predictions[0])
 
         self.ui.textEdit_10.setText(predictions)
 

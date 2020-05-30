@@ -25,7 +25,7 @@ trn = df.drop(df.columns[0], axis = 1)  # выбираем то по чему б
 Xtrn, Xtest, Ytrn, Ytest = train_test_split(trn, trg, test_size=0.3)
 #собираем регрессию
 model = SVR(kernel='linear', degree = 2)
-model.fit(Xtrn, Ytrn)
+model.fit(Xtrn, np.ravel(Ytrn))
 # высчитываю r^2
 score = model.score(Xtest, Ytest)
 print('r2 = ',score)
@@ -60,7 +60,7 @@ y = []
 models = ['linear', 'poly', 'rbf', 'sigmoid']
 for i in range(len(models)):
     model = SVR(kernel=models[i])
-    model.fit(Xtrn, Ytrn)
+    model.fit(Xtrn, np.ravel(Ytrn))
     # записываю предсказания
     predictions = model.predict(Xtest)
 
@@ -84,7 +84,7 @@ x = []
 y = []
 for i in range(2,10,1):
     model = SVR(kernel='poly', degree = i)
-    model.fit(Xtrn, Ytrn)
+    model.fit(Xtrn, np.ravel(Ytrn))
     # записываю предсказания
     predictions = model.predict(Xtest)
 
